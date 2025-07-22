@@ -1,0 +1,20 @@
+{
+  "name": "fuel-injector-characterizer-gui",
+  "version": "1.0.0",
+  "description": "WebSerial frontend for Fuel Injector Characterizer",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "serve": "npx http-server -p 8000"
+  },
+  "keywords": [
+    "webserial",
+    "arduino",
+    "fuel-injector"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuel Injector Characterizer</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Fuel Injector Characterizer</h1>
+        
+        <div class="connection-panel">
+            <h2>Connection</h2>
+            <button id="connectBtn" class="btn btn-primary">Connect to Device</button>
+            <div id="connectionStatus" class="status-indicator disconnected">Disconnected</div>
+        </div>
+
+        <div class="parameters-panel">
+            <h2>Current Parameters</h2>
+            <div class="parameter-grid">
+                <div class="parameter">
+                    <span class="param-label">Pulse Width:</span>
+                    <span id="pulseWidth" class="param-value">-- ms</span>
+                </div>
+                <div class="parameter">
+                    <span class="param-label">Peak Time:</span>
+                    <span id="peakTime" class="param-value">-- ms</span>
+                </div>
+                <div class="parameter">
+                    <span class="param-label">Hold Duty:</span>
+                    <span id="holdDuty" class="param-value">-- %</span>
+                </div>
+                <div class="parameter">
+                    <span class="param-label">Hold Freq:</span>
+                    <span id="holdFreq" class="param-value">-- Hz</span>
+                </div>
+            </div>
+            <div class="pot-values">
+                <h3>Potentiometer Values</h3>
+                <div class="pot-grid">
+                    <div class="pot-value">POT0: <span id="pot0">---</span></div>
+                    <div class="pot-value">POT1: <span id="pot1">---</span></div>
+                    <div class="pot-value">POT2: <span id="pot2">---</span></div>
+                    <div class="pot-value">POT3: <span id="pot3">---</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-panel">
+            <h2>Injector Controls</h2>
+            <div class="injector-controls">
+                <div class="injector-group">
+                    <h3>Single Fire - Normal</h3>
+                    <button class="btn btn-primary injector-btn" data-cmd="1" disabled>Inj 1</button>
+                    <button class="btn btn-primary injector-btn" data-cmd="2" disabled>Inj 2</button>
+                    <button class="btn btn-primary injector-btn" data-cmd="3" disabled>Inj 3</button>
+                    <button class="btn btn-primary injector-btn" data-cmd="4" disabled>Inj 4</button>
+                    <button class="btn btn-primary injector-btn" data-cmd="5" disabled>All</button>
+                </div>
+                <div class="injector-group">
+                    <h3>Single Fire - Peak & Hold</h3>
+                    <button class="btn btn-warning injector-btn" data-cmd="a" disabled>Inj 1</button>
+                    <button class="btn btn-warning injector-btn" data-cmd="s" disabled>Inj 2</button>
+                    <button class="btn btn-warning injector-btn" data-cmd="d" disabled>Inj 3</button>
+                    <button class="btn btn-warning injector-btn" data-cmd="f" disabled>Inj 4</button>
+                </div>
+                <div class="injector-group">
+                    <h3>Multi Fire (50x) - Normal</h3>
+                    <button class="btn btn-secondary injector-btn" data-cmd="q" disabled>Inj 1</button>
+                    <button class="btn btn-secondary injector-btn" data-cmd="w" disabled>Inj 2</button>
+                    <button class="btn btn-secondary injector-btn" data-cmd="e" disabled>Inj 3</button>
+                    <button class="btn btn-secondary injector-btn" data-cmd="r" disabled>Inj 4</button>
+                </div>
+                <div class="injector-group">
+                    <h3>Multi Fire (50x) - Peak & Hold</h3>
+                    <button class="btn btn-danger injector-btn" data-cmd="z" disabled>Inj 1</button>
+                    <button class="btn btn-danger injector-btn" data-cmd="x" disabled>Inj 2</button>
+                    <button class="btn btn-danger injector-btn" data-cmd="c" disabled>Inj 3</button>
+                    <button class="btn btn-danger injector-btn" data-cmd="v" disabled>Inj 4</button>
+                </div>
+                <div class="injector-group">
+                    <h3>Sequential All</h3>
+                    <button class="btn btn-success injector-btn" data-cmd="t" disabled>50x Normal</button>
+                    <button class="btn btn-success injector-btn" data-cmd="g" disabled>1x P&H</button>
+                    <button class="btn btn-success injector-btn" data-cmd="b" disabled>50x P&H</button>
+                </div>
+            </div>
+            
+            <h2>Configuration</h2>
+            <div class="config-controls">
+                <div class="pulse-width-setter">
+                    <label for="pulseWidthInput">Pulse Width (ms):</label>
+                    <input type="number" id="pulseWidthInput" min="0.1" max="100" step="0.1" value="20" disabled>
+                    <button class="btn btn-info" id="setPulseWidthBtn" disabled>Set</button>
+                </div>
+                <button class="btn btn-info config-btn" data-cmd="l" disabled>Toggle Logging</button>
+                <button class="btn btn-info config-btn" data-cmd="k" disabled>Calibrate Sensors</button>
+                <button class="btn btn-info config-btn" data-cmd="m" disabled>List Log Files</button>
+                <button class="btn btn-info config-btn" data-cmd="i" disabled>Get Status</button>
+                <button class="btn btn-info config-btn" data-cmd="h" disabled>Show Help</button>
+            </div>
+        </div>
+        
+        <div class="results-panel">
+            <h2>Current Measurement Results</h2>
+            <div class="results-grid">
+                <div class="result-card">
+                    <h3>Injector 1</h3>
+                    <div class="result-value">Peak: <span id="peak1">--</span> A</div>
+                    <div class="result-value">Avg: <span id="avg1">--</span> A</div>
+                </div>
+                <div class="result-card">
+                    <h3>Injector 2</h3>
+                    <div class="result-value">Peak: <span id="peak2">--</span> A</div>
+                    <div class="result-value">Avg: <span id="avg2">--</span> A</div>
+                </div>
+                <div class="result-card">
+                    <h3>Injector 3</h3>
+                    <div class="result-value">Peak: <span id="peak3">--</span> A</div>
+                    <div class="result-value">Avg: <span id="avg3">--</span> A</div>
+                </div>
+                <div class="result-card">
+                    <h3>Injector 4</h3>
+                    <div class="result-value">Peak: <span id="peak4">--</span> A</div>
+                    <div class="result-value">Avg: <span id="avg4">--</span> A</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="console-panel">
+            <h2>Console Output</h2>
+            <div id="console" class="console"></div>
+            <div class="console-input">
+                <input type="text" id="commandInput" placeholder="Enter command..." disabled>
+                <button id="sendBtn" class="btn" disabled>Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/webserial.js"></script>
+</body>
+</html>
